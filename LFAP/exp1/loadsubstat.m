@@ -1,12 +1,20 @@
-function[towa,away]=loadsubstatNEW(subname)
+function[towa,away]=loadsubstat(subname)
 close all;
 %subname = '';
 
+
+
 %load('female_exp\away\exp_0.3927_fe_aw_fr4.mat');
 dname = 'C:\Users\LocalAdminLeo\Documents\MATLAB\NPVOW\LFAP\exp1\';
-te = load(strcat(dname,'result\', subname,'_resp540.mat'));
+te = load(strcat(dname,'result\', subname));
 
 resp = te.('resp');
+
+%cut first repetition of every movie for subjects where it is included in
+%the data, because it is counted as a training trial
+if size(resp, 1)==576,
+    resp(1:36,:) = [];
+end
 
 shad = resp(~isinf(resp(:,1)),:);
 towaComplete = shad(shad(:,2)==1,:);
