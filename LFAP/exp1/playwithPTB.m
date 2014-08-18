@@ -42,7 +42,7 @@ listing(1:2) = []; %cut off references to parent folders, only keep the filename
 
 
 numfiles = numel(listing);
-conditiontrials = 5; %number of trials per condition
+conditiontrials = 16; %number of trials per condition
 %resp has number of rows same as number of conditions(movies) times number of trials per condition
 %resp columns should be [angle, actual direction, respondent direction, time for trial] 
 resp = inf(numfiles*conditiontrials, 7);
