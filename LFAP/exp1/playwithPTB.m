@@ -36,13 +36,13 @@ str='Please watch the following movies \n \n and identify the walking direction.
 Screen('Flip', wPtr);
 tic; while toc<4,end
 
-dname = 'C:\Users\LocalAdminLeo\Documents\MATLAB\NPVOW\LFAP\exp1\conditions\current\';
+dname = 'C:\Users\Leo\Documents\MATLAB\NPVOW\LFAP\exp1\conditions\current\';
 listing = dir(dname);
 listing(1:2) = []; %cut off references to parent folders, only keep the filenames
 
 
 numfiles = numel(listing);
-conditiontrials = 5; %number of trials per condition
+conditiontrials = 16; %number of trials per condition
 %resp has number of rows same as number of conditions(movies) times number of trials per condition
 %resp columns should be [angle, actual direction, respondent direction, time for trial] 
 resp = inf(numfiles*conditiontrials, 7);
@@ -140,7 +140,7 @@ for trial = 1:conditiontrials
         break;
     end 
 end
-  
+     
 Screen('CloseAll');
 %clc;
 disp('Movie displayed successfully');
