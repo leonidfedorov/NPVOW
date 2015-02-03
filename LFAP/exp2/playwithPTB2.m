@@ -4,16 +4,24 @@ function [answer, time]=playwithPTB2(filename)%, windowpointer)
 %clear all
 % clc
 
-subjname = '_'; 
-respnumber = 0;
-eflag1 = 0;
-eflag2 = 0;
+
+eflag1 = 0;%this flags are used to break out of the loop when I press space key.
+eflag2 = 0;%not cool, but it's because I have to listen to the key in a loop
+%instead of having the event handling, which {[(sucks in matlab)]}
 
 subjname = input('Please insert the initials (of first and last names) of the participants: ', 's');
 while isempty(subjname)
     subjname = input('Please insert the initials (of first and last names) of the participants: ', 's');
-end 
-subjname = strcat(subjname,'_');
+end
+subjdir = strcat(subjname,'\');
+%create a new directory if there is a subject name already
+%append '!' if this is a second recording
+
+if exist(strcat('C:\Users\',getenv('USERNAME'),'\Documents\MATLAB\NPVOW\LFAP\exp2\', subjname),'dir')~=7,
+    mkdir(subjname);
+end
+
+
 
 AssertOpenGL;
 Screen('Preference', 'SkipSyncTests', 1) 
@@ -36,9 +44,11 @@ str='Please watch the following movies \n \n and identify the walking direction.
 Screen('Flip', wPtr);
 tic; while toc<4,end
 
-dname = 'C:\Users\LocalAdminLeo\Documents\MATLAB\NPVOW\LFAP\exp2\conditions\current\';
+dname = strcat('C:\Users\',getenv('USERNAME'),'\Documents\MATLAB\NPVOW\LFAP\exp2\conditions\current\');
 listing = dir(dname);
 listing(1:2) = []; %cut off references to parent folders, only keep the filenames
+
+
 
 
 numfiles = numel(listing);
@@ -131,7 +141,15 @@ for trial = 1:conditiontrials
         resp(recordindex, 6) = respnumber;
         resp(recordindex, 7) = displaytotal;
         %size(te(all(isfinite(te)'a),:),1) %determine number of non-infinite rows in one line
-        save(strcat(subjname,'resp',num2str(respnumber),'.mat'), 'resp');
+        
+        %WARNING: the below trims the mantiss of the double seconds value with
+        %the fix() function, so it assumes there can't be two responses in
+        %one second, and that we can't be on a machine with same time
+        %value as at the moment of the previous recording; violating these  
+        %assumptions may create the same filename and overwrite the response file
+        timestamp = int2str(fix(clock));%get current time and convert to string
+        timestamp (timestamp==' ')=[];%trim of spaces present after type conversion
+        save(strcat(subjdir,subjname,'_resp',num2str(respnumber),'_',timestamp,'.mat'), 'resp');
          
         if eflag1 == 1
             eflag2 = 1;

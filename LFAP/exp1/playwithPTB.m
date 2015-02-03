@@ -36,7 +36,7 @@ str='Please watch the following movies \n \n and identify the walking direction.
 Screen('Flip', wPtr);
 tic; while toc<4,end
 
-dname = 'C:\Users\Leo\Documents\MATLAB\NPVOW\LFAP\exp1\conditions\current\';
+dname = 'C:\Users\LocalAdminLeo\Documents\MATLAB\NPVOW\LFAP\exp1\conditions\current\';
 listing = dir(dname);
 listing(1:2) = []; %cut off references to parent folders, only keep the filenames
 
