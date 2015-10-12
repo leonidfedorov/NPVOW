@@ -1,6 +1,6 @@
 function [retval]=maskbygaitvariation(folder)
 %maskbygaitvariation(patternpath) take shading pathway outputs present in
-%               the given folder and compute the overall temporall variation per receptive
+%               the given folder and compute the overall temporal variation per receptive
 %               field. Return a bitmask of those receptive fields that passed the
 %               threshold.
 %
@@ -10,7 +10,7 @@ function [retval]=maskbygaitvariation(folder)
 %               Tested with MATLAB 8.4 on a Xeon E5 under Windows 7 64-bit
 %
 %
-
+ 
 narginchk(1,1)
 
 path_train = 'C:\Users\LocalAdminLeo\Documents\MATLAB\NPVOW\walker\test\joris\';
