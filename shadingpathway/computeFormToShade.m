@@ -1,5 +1,5 @@
-function computeFormToShade(pathkey)
-% [FV1f, FV1c, FV4bar, MSTsd, MSTlmf, OFM] = genllr(SVM, MODS);
+function [formresp] = computeFormToShade(pathkey)
+% [formresp] = computeFormToShade(pathkey);
 %          computes responses of the form pathway of the Giese-Poggio 2003
 %          model to the stimuli of large shaded walkers. Takes pathkey as
 %          an input - it should contain a list of PNGs representing the
@@ -10,7 +10,10 @@ function computeFormToShade(pathkey)
 %                Tested with MATLAB 8.4 on a Xeon E5-1620 3.6Ghz under W7
 %
 
-PXM = loadLFAPpxlarray(WalkerPath.getPath(pathkey));
+narginchk(1,1)
+
+stimulipath  = WalkerPath.getPath(pathkey);
+PXM = loadLFAPpxlarray(stimulipath);
 
 timeSize = size(PXM, 3)
 % create the Gabor function array
@@ -31,21 +34,32 @@ nmfFV1c = 70;        % fixed normalization factor
 FV1f  = (FV1f - thrFV1f) .* (FV1f > thrFV1f) / nmfFV1f;
 FV1c  = (FV1c - thrFV1c) .* (FV1c > thrFV1c) / nmfFV1c;
 
-display(1)
+% display(1)
 
 
 %         CREATE THE V4 RESPONSES (BAR DETECTORS)
 
 %         calculate the cell responses
 for k = 1:timeSize,       % iterate over time steps
-  % [FV4bar(:, :, :, k), xcv4, ycv4] = ...
-  %         %V1r2V4rb(squeeze(FV1(:, :, :, k)), xgct, ygct);
    [FV4bar(:, :, :, k), xcv4, ycv4] =  V1mr2V4rb(squeeze(FV1f(:, :, :, k)), ...
                      squeeze(FV1c(:, :, :, k)), xgct, ygct);
 end;
 
-thrV4b = 0.4;         % threshold
+thrV4b = 0.15;         % threshold
 nmfFV4bar = 1;         % fixed normalization factor
 FV4bar = (FV4bar - thrV4b) .* (FV4bar > thrV4b) / nmfFV4bar;
 
-display(1)
+formresp = struct('v1c',FV1c, 'v1f', FV1f, 'v4',FV4bar);
+
+
+save(fullfile(stimulipath, strcat('formresp','.mat')),'formresp')
+
+% save for backup in a separate folder named as timestamp
+savepath = strrep(datestr(datetime('now')),':','-')
+mkdir(stimulipath,savepath)
+respath = fullfile(stimulipath, savepath, strcat('formresp','.mat'));
+save(respath, 'formresp');
+
+
+return
+
