@@ -1,7 +1,25 @@
-function [patternMap] = computeRBFonForm(varargin)
+function [networkResp] = computeRBFonForm(varargin)
 % computeRBFonForm(varargin);
-%          takes a list of pathkeys containing form pathway output and
-%          returns snapshot neuron outputs based on it.
+%          takes a list of pathkeys containing form pathway output. Returns
+%          a cell array where cell at (i, j) contains the RBF network 
+%          response of population centered at pattern j to the input 
+%          pattern at i.
+%
+%          Meta-example:
+%          We can call computeRBFonForm('pathkey1', 'pathkey2')
+%          
+%          It'll retrieve V4 responses stored under 2 keys, e.g. r1 and r2
+%
+%          Then create two populations of RBF neurons corresponding to 
+%          response patterns r1 and r2, where each neuron will be centered
+%          on a single frame output, e.g. pop1 and pop2
+%          
+%          Then calculate all possible responses of pop1 and pop2 to itself
+%          and to each other. One response is one rectanguilar matrix.
+%          
+%          Return cell array of population response combinations, e.g.
+%          [pop1 to pop1] [pop2 to pop1]
+%          [pop1 to pop2] [pop2 to pop2]
 %
 %                Version 0.9,  19 October 2015 by Leonid Fedorov.
 %
@@ -9,46 +27,46 @@ function [patternMap] = computeRBFonForm(varargin)
 %
 
 % Don't hate me for this code. It's MATLAB cell arrays that suck.
-resplist = cellfun(@loadFormResp, varargin); %loads a structure array of responses, where each response structure is derived from varargin
-v4list = arrayfun(@(x) getfield(x, 'v4'),resplist, 'UniformOutput', false);% returns a cell array of original v4 response arrays
-% Same cell array of v4 responses, but response to one image are reshaped from a 3-dim array to a 1-dim vector:
-v4resp = cellfun(@(x) reshape(x, [size(x,1)*size(x,2)*size(x,3), size(x,4)]), v4list,'UniformOutput', false); 
 
+%Load a structure array of responses, where each response structure is derived from varargin
+resplist = cellfun(@loadFormResp, varargin); 
 
+%From each structure element get V4 responses as a cell array
+v4list = arrayfun(@(x) getfield(x, 'v4'),resplist, 'UniformOutput', false);
+
+% Reshape V4 responses, so 3d response array to each image is a 1d array
+v4resp = cellfun(@(x) reshape(x, [size(x,1)*size(x,2)*size(x,3), size(x,4)]), v4list, 'UniformOutput', false);
+
+% Estimate to beta parameter of the RBF function
 D = cell2mat(v4resp)' * cell2mat(v4resp);
 beta = 10.0/sqrt(sum(D(:)/size(D,1)^2));%1.0%40
 
-FLTCMP=0.00000000001;
+% FLTCMP = 0.00000000001;
 
-r11 = computeRBFvalues(beta, v4resp{1}, v4resp{1}); figure; surf(r11);
-r12 = computeRBFvalues(beta, v4resp{1}, v4resp{2}); figure; surf(r12);
-r22 = computeRBFvalues(beta, v4resp{2}, v4resp{2}); figure; surf(r22);
-r21 = computeRBFvalues(beta, v4resp{2}, v4resp{1}); figure; surf(r21);
 
-% te = arrayfun(@(x) rbf_fn(beta,v4resp{1}', x), v4resp{1}', 'UniformOutput', false);
-% 
-% applyToGivenRow = @(func, matrix) @(row) func(matrix(row, :));
-% 
-% RBFrowdistrow = @(beta, matrix) @(col) rbf_fun(beta, matrix, matrix(:,col) )
-% RBFrowdistmat = @(beta, matrix) arrayfun(RBFrowdistmat(beta, matrix) )
-% 
-% arrayfun(@(x) rbf_fn(beta,v4resp{1}, x), v4resp{1}(:,1), 'UniformOutput', false);
-% arrayfun(@(x) rbf_fn(beta,v4resp{1}, x), v4resp{1}(:,2), 'UniformOutput', false);
-% arrayfun(@(x) rbf_fn(beta,v4resp{1}, x), v4resp{1}(:,3), 'UniformOutput', false);
-% 
+%Number of populations will equal the number of patterns
+popnum = numel(v4resp); 
 
-rbfs = inf(size(v4resp{1}));
-for ind = 1:size(v4resp{1},2),
-    rbfs = rbf_fn(beta, v4resp{1}, v4resp{1}(:, ind));
-end
+%This function will take a pair of indices as a single argument, and call 
+%rbfOfColumns with predefined coefficient beta on two elements of v4resp
+%that have these given indices.
+rbfPatternResp = @(x) rbfOfColumns(beta, v4resp{ x(1) }, v4resp{ x(2) });
 
-for i=1:30,
-    away_pattern(i,1:30) = rbf_fn(beta, away_out(1:30,:),away_out(i,:))';
-    towa_pattern(i,1:30) = rbf_fn(beta_towa,towa_out(1:30,:),towa_out(i,:))';
-    away_pattern_resp_towa(i,1:30) = rbf_fn(beta_away,away_out(1:30,:),towa_out(i,:))';
-    towa_pattern_resp_away(i,1:30) = rbf_fn(beta_towa,towa_out(1:30,:),away_out(i,:))';
-    
-end
+%supply pairs of indices to rbfPatternResp to call it on each pair
+patternList = cellfun(rbfPatternResp, listPairs(1:popnum), 'UniformOutput', false);
+
+%an element at index (i,j) is the response of population j to pattern i
+networkResp = reshape(patternList, [popnum popnum])
+
+%TODO: think about rearranging the frames
+%TODO: save the result which requires additional folder organization
+%TODO: implement the separate plotting routine
+%TODO: implement the LASSO method to regress this onto idealized Gaussians
+% figure;
+% bar(mean([r11(:) r12(:) r21(:) r22(:)]))
+% figure;
+% bar(mean([diag(r11) diag(r12) diag(r21) diag(r22)]))
+
 
 
 return
