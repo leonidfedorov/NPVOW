@@ -5,7 +5,7 @@ function [formresp] = computeFormToShade(pathkey)
 %          an input - it should contain a list of PNGs representing the
 %          relevant frames of the walker.
 %
-%                Version 0.9,  12 October 2015 by Leonid Fedorov.
+%                Version 1.0,  14 October 2015 by Leonid Fedorov.
 %
 %                Tested with MATLAB 8.4 on a Xeon E5-1620 3.6Ghz under W7
 %

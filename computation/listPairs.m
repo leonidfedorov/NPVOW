@@ -1,5 +1,5 @@
 function [pairs] = listPairs(index, varargin)
-% listPairs(index);
+% listPairs(index, varargin);
 %          Returns a Cartesian product of a list of integer indices with
 %          itself. First argument should be a 1-dimensional vector of
 %          numbers. If the second argument is 'num', returns a 2d array
