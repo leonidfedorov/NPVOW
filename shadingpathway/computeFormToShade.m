@@ -4,6 +4,9 @@ function [formresp] = computeFormToShade(pathkey)
 %          model to the stimuli of large shaded walkers. Takes pathkey as
 %          an input - it should contain a list of PNGs representing the
 %          relevant frames of the walker.
+%                  
+%                Based off unpublished code of Martin Giese written for his
+%                PhD and subsequent early work. Review doi: 10.1038/nrn1057
 %
 %                Version 1.0,  14 October 2015 by Leonid Fedorov.
 %
@@ -31,9 +34,10 @@ thrFV1f = 20;        % threshold
 nmfFV1f = 70;        % fixed normalization factor
 thrFV1c = 20;        % threshold   
 nmfFV1c = 70;        % fixed normalization factor
-FV1f  = (FV1f - thrFV1f) .* (FV1f > thrFV1f) / nmfFV1f;
-FV1c  = (FV1c - thrFV1c) .* (FV1c > thrFV1c) / nmfFV1c;
-
+%FV1f  = (FV1f - thrFV1f) .* (FV1f > thrFV1f) / nmfFV1f;
+%FV1c  = (FV1c - thrFV1c) .* (FV1c > thrFV1c) / nmfFV1c;
+FV1f = level(FV1f, thrFV1f, nmfFV1f);
+FV1c = level(FV1c, thrFV1c, nmfFV1c);
 % display(1)
 
 

@@ -8,6 +8,8 @@ classdef WalkerPath
         StNW1_c_0_n = 'NPVOW\walker\test\newjoris\270\';
         StNW1_c_45_n = 'NPVOW\walker\test\newjoris\315\';
         StNW1_c_315_n = 'NPVOW\walker\test\newjoris\225\';
+        StNW1_c_45_bw = 'NPVOW\walker\test\bwjoris\45\';
+        StNW1_c_315_bw = 'NPVOW\walker\test\bwjoris\315\';
     end
     
     methods(Static, Access = public)
@@ -40,6 +42,10 @@ classdef WalkerPath
                     dirpath = WalkerPath.StNW1_c_45_n;
                 case 'st-c-315-n'
                     dirpath = WalkerPath.StNW1_c_315_n;
+                case 'st-c-45-n-bw'
+                    dirpath = WalkerPath.StNW1_c_45_bw;
+                case 'st-c-315-n-bw'
+                    dirpath = WalkerPath.StNW1_c_315_bw;
                 otherwise%just display the error message, so {getPath} will just return the {userpath}
                     display('WARNING: Requested unknown path, returning the {userpath}')
                     dirpath = '';
