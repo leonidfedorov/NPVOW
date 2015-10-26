@@ -51,7 +51,8 @@ end;
 
 thrV4b = 0.01;         % threshold
 nmfFV4bar = 1;         % fixed normalization factor
-FV4bar = (FV4bar - thrV4b) .* (FV4bar > thrV4b) / nmfFV4bar;
+%FV4bar = (FV4bar - thrV4b) .* (FV4bar > thrV4b) / nmfFV4bar;
+FV4bar = level(FV4bar, thrV4b, nmfFV4bar);
 
 formresp = struct('v1c',FV1c, 'v1f', FV1f, 'v4',FV4bar, 'v4pos', [xcv4; ycv4]);
 

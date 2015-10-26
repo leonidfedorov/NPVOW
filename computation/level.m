@@ -13,6 +13,6 @@ function [result] = level(array, lbound, divisor)
 % \end{cases}
 % % % 
 
-result = (arr - lbound).*(array > lbound / divisor);
+result = (array - lbound).*(array > lbound / divisor);
 
 return

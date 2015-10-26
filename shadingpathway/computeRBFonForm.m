@@ -8,16 +8,16 @@ function [networkResp] = computeRBFonForm(varargin)
 %          Meta-example:
 %          We can call computeRBFonForm('pathkey1', 'pathkey2')
 %          
-%          It'll retrieve V4 responses stored under 2 keys, e.g. r1 and r2
+%          It'll retrieve V4 responses stored under 2 keys, e.g. r1 and r2.
 %
-%          Then create two populations of RBF neurons corresponding to 
-%          response patterns r1 and r2, where each neuron will be centered
-%          on a single frame output, e.g. pop1 and pop2
+%          Then it'll create two populations of RBF neurons corresponding 
+%          to response patterns r1 and r2, where each neuron will be
+%          centered on a single frame output, e.g. pop1 and pop2.
 %          
 %          Then calculate all possible responses of pop1 and pop2 to itself
 %          and to each other. One response is one rectanguilar matrix.
 %          
-%          Return cell array of population response combinations, e.g.
+%          Then return cell array of population response combinations, e.g.
 %          [pop1 to pop1] [pop2 to pop1]
 %          [pop1 to pop2] [pop2 to pop2]
 %
@@ -56,17 +56,17 @@ rbfPatternResp = @(x) rbfOfColumns(beta, v4resp{ x(1) }, v4resp{ x(2) });
 patternList = cellfun(rbfPatternResp, listPairs(1:popnum), 'UniformOutput', false);
 
 %an element at index (i,j) is the response of population j to pattern i
-networkResp = reshape(patternList, [popnum popnum])
+networkResp.resp = reshape(patternList, [popnum popnum]);
+networkResp.meta = varargin; % we save pathkeys to know what paths were used for the network
 
-%TODO: think about rearranging the frames
-%TODO: save the result which requires additional folder organization
-%TODO: implement the separate plotting routine
-%TODO: implement the LASSO method to regress this onto idealized Gaussians
-% figure;
-% bar(mean([r11(:) r12(:) r21(:) r22(:)]))
-% figure;
-% bar(mean([diag(r11) diag(r12) diag(r21) diag(r22)]))
+%TODO: Parametrize the simulation path instead of hard coding it
+simpath = WalkerPath.getPath('sim-c-45-315-n');
+save(fullfile(simpath, strcat('networkResp','.mat')),'networkResp')
+savepath = strrep(datestr(datetime('now')), ':', '-');
+mkdir(simpath, savepath);
+save(fullfile(simpath, savepath, strcat('networkResp', '.mat')), 'networkResp');
 
+%TODO: think about rearranging the frames??
 
 
 return

@@ -1,4 +1,4 @@
-function [rbfmatrix] = computeRBFvalues(beta, array1, array2)
+function [rbfmatrix] = rbfOfColumns(beta, array1, array2)
 % computeRBFvalues(beta, array1, array2);
 %          % Computes the values of the RBF function between each pair of
 %          columns taken from  array1 and array2, given the beta parameter.
