@@ -20,9 +20,9 @@ classdef WalkerPath
         StNW1_c_315_bw = 'NPVOW\walker\test\bwjoris\315\';
         
         %morphed paths
-        StNW1_c_45_315_l05 = 'NPVOW\walker\test\newjoris\pxlmorph_45_315_l0.5';
-        StNW1_c_0_0_l05 = 'NPVOW\walker\test\newjoris\pxlmorph_0_0_l0.5';
-        StNW1_c_90_270_l05 = 'NPVOW\walker\test\newjoris\pxlmorph_90_270_l0.5';
+        Morph_StNW1_c_45_315_l05 = 'NPVOW\walker\test\pxlmorph\c_45_315_la0.5';
+        Morph_StNW1_c_0_0_l05 = 'NPVOW\walker\test\pxlmorph\c_0_0_la0.5';
+        Morph_StNW1_c_90_270_l05 = 'NPVOW\walker\test\pxlmorph\c_90_270_la0.5';
 
         %simulation keys
         Sim_c_45_315_n = 'NPVOW\walker\simres\c_45-315_n\';
@@ -75,12 +75,12 @@ classdef WalkerPath
                     dirpath = WalkerPath.StNW1_c_315_bw;
                     
                 %pathkeys for the morphs
-                case 'st-c-45-315-n-l0.5'
-                    dirpath = WalkerPath.StNW1_c_45_315_l05;
-                case 'st-c-0-0-n-l0.5'
-                    dirpath = WalkerPath.StNW1_c_0_0_l05;    
-                case 'st-c-90-270-n-l0.5'
-                    dirpath = WalkerPath.StNW1_c_90_270_l05;      
+                case 'morph-c-45-315-n-la0.5'
+                    dirpath = WalkerPath.Morph_StNW1_c_45_315_l05;
+                case 'morph-c-0-0-n-la0.5'
+                    dirpath = WalkerPath.Morph_StNW1_c_0_0_l05;    
+                case 'morph-c-90-270-n-la0.5'
+                    dirpath = WalkerPath.Morph_StNW1_c_90_270_l05;      
                     
                 %simulation results for RBF networks pathkeys
                 case 'sim-c-45-315-n'
