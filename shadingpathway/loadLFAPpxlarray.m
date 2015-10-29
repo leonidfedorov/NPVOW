@@ -15,12 +15,15 @@ listing = getFrameList(stimuliPath);
 
 if numel(listing) > 0
     img_in = im2double(imread(fullfile(stimuliPath, listing{1})));
+    if size(img_in,3) > 1,
+        img_in(:,:,2:3) = [];   % discard redundant channels, it's grayscale anyway
+    end
     pixelArray = inf([size(img_in),numel(listing)]);
     pixelArray(:,:,1) = img_in;
 
     for ind = 2:numel(listing),
         img_in = im2double(imread(fullfile(stimuliPath, listing{ind})));
-    %    imshow(img_in)
+        if size(img_in,3) > 1, img_in(:,:,2:3) = []; end
         pixelArray(:,:,ind) = img_in;
     end
 end

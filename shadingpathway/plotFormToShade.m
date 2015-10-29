@@ -42,11 +42,12 @@ end
 
 listing = getFrameList(stimulipath);
 
-f = figure;%('position',[100 70 900 900]);
+f = figure;
 fpos = get(f, 'position');
 [posX, posY] = meshgrid(V4pos(1, :), V4pos(2, :));
 for ind = 1:numel(listing)
     img_in = im2double(imread(fullfile(stimulipath,listing{ind})));
+    if size(img_in,3) > 1, img_in(:,:,2:3) = []; end
     if ~isequal([fpos(3), fpos(4)], size(img_in))
         set(f, 'position', [0 0 size(img_in)])
     end
