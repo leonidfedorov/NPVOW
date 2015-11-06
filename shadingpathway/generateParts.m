@@ -8,7 +8,8 @@ function [ output_args ] = generateParts( )
 %                Tested with MATLAB 8.4 on a Xeon E5-1620 3.6Ghz under W7
 %
 output= []
-partcolor = inf(1, 10);
+%partcolor = inf(1, 10);%normal color
+partcolor = ones(1,10)*1.0; %while color
 partdisplay = inf(1,11);
 partprefices = {'lua','rua','lul','rul','lll','rll','lla','rla','lb','ub','h'};
 partarray = eye(11);
