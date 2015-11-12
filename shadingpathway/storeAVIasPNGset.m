@@ -18,7 +18,7 @@ narginchk(1,1)
 aviListing = dir(strcat(folder,filesep,'*.avi'));
 videoNameList = {};
 for i = 1:numel(aviListing),
-    [filePath, fileName, fileExt] = fileparts(aviListing(i).name);
+    [filePath, fileName, fileExt] = fileparts(aviListing(i).name); 
     videoName = fullfile(folder,fileName);
     videoNameList = [videoNameList;{videoName}]; 
     if ~isdir(videoName)
@@ -36,7 +36,7 @@ for i = 1:numel(videoNameList)
     for frindex = 1:(video.framerate*video.duration/2), 
         videoFrame = readFrame(video);
         videoFrame(:,:,2:3) = [];
-
+        %videoFrame = videoFrame(50:550,250:550);
 %NOTE: below its very important to convert the second argument with char(),
 %otherwise the imwrite() function won't be able to parse its arguments.
         imwrite(videoFrame, char(fullfile(videoNameList(i), strcat(num2str(frindex),'.png'))),'PNG');
