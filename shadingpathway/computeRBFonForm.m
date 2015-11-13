@@ -48,7 +48,7 @@ v4resp = cellfun(@(x) reshape(x, [size(x,1)*size(x,2)*size(x,3), size(x,4)]), v4
 
 % Estimate to beta parameter of the RBF function
 D = cell2mat(v4resp)' * cell2mat(v4resp);
-beta = 0.5/sqrt(sum(D(:)/size(D,1)^2));%1.0%40
+beta = 0.2/sqrt(sum(D(:)/size(D,1)^2));%1.0%40
 
 % FLTCMP = 0.00000000001;
 

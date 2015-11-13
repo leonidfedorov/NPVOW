@@ -1,4 +1,4 @@
-function [respath] = computeRFVariability(pathkey, type)
+function [result] = computeRFVariability(pathkey, type)
 
 %computeRFVariability(folder) given the results of the hierarchical shading
 %              pathway computation stored in a specified folder, computes
@@ -12,16 +12,19 @@ function [respath] = computeRFVariability(pathkey, type)
 
 %Load a structure array of responses, where each response structure is derived from varargin
 resp = loadPathwayResp(pathkey, type);
-[tind, xind, yind, dirind] = size(resp);
+[tind, xind, yind, dirind] = size(resp); 
+%[# of time points, # of RFs in horizontal dimension, # .. in vertical
+%dimension, # of filter orientations]
+
+
+ev = unityroots(dirind); %Complex roots to 'x^dirind = 1', each has absolute value = 1 obviously
 
 rfresp = zeros(tind, xind * yind);
-ev = exp(2 * pi * [0 : dirind - 1] / dirind * 1i); %Complex roots to x^dirind = 1, each has length = 1 obviously
-
 te = reshape(resp, tind, xind * yind, dirind); %just have the 2d RF array as 1d array for convenience
 for i = 1 : xind * yind,
     for t = 1 : tind,
-        %inner product of RF response at a given time with a vector in
-        %C^dirind represents an RF population code at a higher level
+        %inner product of R^dirind RF response vector at a given time with a standard 
+        %basis of C^dirind represents an R^1 RF population code at a higher level
         rfresp(t, i) = ev * squeeze(te(t, i, :));
     end
 end
@@ -46,10 +49,15 @@ for j = 1 : xind * yind
     plot(rf_variability(:, j));
 end
 
-%From each structure element get V4 responses as a cell array
-v4list = arrayfun(@(x) getfield(x, 'v4'),resplist, 'UniformOutput', false);
+%TODO: this is a very crude quantifier of variability, which basically sums
+%up across all RFs and all time. If it doesn't work, improve it here.
+result = sum(rf_variability(:))
 
-% Reshape V4 responses, so 3d response array to each image is a 1d array
-v4resp = cellfun(@(x) reshape(x, [size(x,1)*size(x,2)*size(x,3), size(x,4)]), v4list, 'UniformOutput', false);
+% % % 
+% % % %From each structure element get V4 responses as a cell array
+% % % v4list = arrayfun(@(x) getfield(x, 'v4'),resplist, 'UniformOutput', false);
+% % % 
+% % % % Reshape V4 responses, so 3d response array to each image is a 1d array
+% % % v4resp = cellfun(@(x) reshape(x, [size(x,1)*size(x,2)*size(x,3), size(x,4)]), v4list, 'UniformOutput', false);
 
 return

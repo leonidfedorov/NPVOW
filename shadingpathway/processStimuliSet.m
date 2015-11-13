@@ -28,7 +28,7 @@ for i = 1:numel(folderList),
     display(resultPath)
     resultPathList = [resultPathList; resultPath];
 end
-display(resultPathList)
+% display(resultPathList)
 
 
 

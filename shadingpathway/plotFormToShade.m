@@ -54,11 +54,17 @@ for ind = 1:numel(listing)
     imshow(img_in, 'Border', 'tight'); hold on;
     for i = 1:8
         oneresp = V4(:, :, i, ind);
-        quiver(posX, posY, oneresp*sin((i+1)*2*pi/8)*500, oneresp*cos((i+1)*2*pi/8)*500, 0);
+        quiver(posX, posY, oneresp*sin((i+1)*2*pi/8)*10, oneresp*cos((i+1)*2*pi/8)*10, 0);      
     end
+    %bake the response amplitudes into the image
+    text(10, 10, ['response bounds: ', num2str(bounds(V4(:, :, :, ind)))]);
+    text(10, 25, 'response means per RF:');
+    text(10, 90, num2str(mean(V4(:, :, :, ind),3))); 
+
     
     currFrame = getframe(gcf);
-    imwrite(currFrame.cdata, fullfile(stimulipath,['q',listing{ind}]),'PNG');
+    if ~isdir(fullfile(stimulipath,'formquiver')), mkdir(stimulipath,'formquiver'); end
+    imwrite(currFrame.cdata, fullfile(stimulipath,'formquiver',['q',listing{ind}]),'PNG');
     pause(0.03)
 end
 

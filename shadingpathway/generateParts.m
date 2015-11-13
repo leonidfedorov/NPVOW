@@ -40,5 +40,36 @@ for ind = 1 : numel(partprefices),
     generateWalker(15*pi/16, directions{2}, bgcolor, [900 900], strcat(prefix, names{2}), partcolor, partdisplay, [0 0])
 end
 
+partdisplay = [0 0 0 0 0 0 1 1 0 0 0];
+generateWalker(17*pi/16, directions{1}, bgcolor, [900 900], strcat(names{1},'arms'), partcolor, partdisplay, [0 0])
+generateWalker(15*pi/16, directions{2}, bgcolor, [900 900], strcat(names{2},'arms'), partcolor, partdisplay, [0 0])
+
+
+partdisplay = [0 0 1 1 0 0 0 0 0 0 0];
+generateWalker(17*pi/16, directions{1}, bgcolor, [900 900], strcat(names{1},'thighs'), partcolor, partdisplay, [0 0])
+generateWalker(15*pi/16, directions{2}, bgcolor, [900 900], strcat(names{2},'thighs'), partcolor, partdisplay, [0 0])
+
+partdisplay = [0 0 0 0 1 1 0 0 0 0 0];
+generateWalker(17*pi/16, directions{1}, bgcolor, [900 900], strcat(names{1},'legs'), partcolor, partdisplay, [0 0])
+generateWalker(15*pi/16, directions{2}, bgcolor, [900 900], strcat(names{2},'legs'), partcolor, partdisplay, [0 0])
+
 
 return
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

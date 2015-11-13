@@ -12,7 +12,7 @@ function [pxlArray] = pixelMorph(pathkey1, pathkey2, lambda, savepathkey)
 
 PXM1 = loadLFAPpxlarray( WalkerPath.getPath(pathkey1) );
 PXM2 = loadLFAPpxlarray( WalkerPath.getPath(pathkey2) );
-PXM2 = circshift(PXM2,floor(size(PXM2,3)/2),3);
+%PXM2 = circshift(PXM2,floor(size(PXM2,3)/2),3);
 
 PXM3 = PXM1.*lambda + PXM2.*(1-lambda);
 
