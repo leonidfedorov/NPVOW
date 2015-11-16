@@ -1,4 +1,4 @@
-function [result] = computeRFVariability(pathkey, type)
+function [vardata] = computeRFVariability(pathkey, type)
 
 %computeRFVariability(folder) given the results of the hierarchical shading
 %              pathway computation stored in a specified folder, computes
@@ -10,7 +10,6 @@ function [result] = computeRFVariability(pathkey, type)
 %
 %
 
-%Load a structure array of responses, where each response structure is derived from varargin
 resp = loadPathwayResp(pathkey, type);
 [tind, xind, yind, dirind] = size(resp); 
 %[# of time points, # of RFs in horizontal dimension, # .. in vertical
@@ -33,31 +32,22 @@ rftempmeans = sum(rfresp, 1) / tind; %means of every RF across time(which is the
 
 %we take the temporal variability as the absolute value of every RF code
 %minus its temporal mean
-rf_variability = inf(size(rfresp));
+rfvariability = inf(size(rfresp));
 for i = 1 : xind * yind,
     for t = 1 : tind,
-        rf_variability(t, i) = abs((rfresp(t, i) - rftempmeans(i)));
+        rfvariability(t, i) = abs((rfresp(t, i) - rftempmeans(i)));
     end
 end
 
 
-figure;
-for j = 1 : xind * yind
-    [row,col] = ind2sub([9,9], j);
-    plotind = sub2ind([9, 9], col, row);
-    subplot(xind, yind, plotind);
-    plot(rf_variability(:, j));
-end
-
 %TODO: this is a very crude quantifier of variability, which basically sums
 %up across all RFs and all time. If it doesn't work, improve it here.
-result = sum(rf_variability(:))
+vardata.sum = sum(rfvariability(:));
+vardata.dimensions = [tind, xind, yind, dirind];
+vardata.variability = rfvariability;
 
-% % % 
-% % % %From each structure element get V4 responses as a cell array
-% % % v4list = arrayfun(@(x) getfield(x, 'v4'),resplist, 'UniformOutput', false);
-% % % 
-% % % % Reshape V4 responses, so 3d response array to each image is a 1d array
-% % % v4resp = cellfun(@(x) reshape(x, [size(x,1)*size(x,2)*size(x,3), size(x,4)]), v4list, 'UniformOutput', false);
+save(fullfile( WalkerPath.getPath(pathkey), strcat('rfvar_', type,'.mat')),'vardata')
+
+
 
 return
