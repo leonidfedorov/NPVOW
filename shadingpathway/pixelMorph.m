@@ -14,7 +14,20 @@ PXM1 = loadLFAPpxlarray( WalkerPath.getPath(pathkey1) );
 PXM2 = loadLFAPpxlarray( WalkerPath.getPath(pathkey2) );
 %PXM2 = circshift(PXM2,floor(size(PXM2,3)/2),3);
 
+for jj = 1:size(PXM2,3)
+    PXM2(:, :, jj) = imfilter(PXM2(:, :, jj), fspecial('gaussian', 30, 0.5), 'replicate');
+%     PXM1(:, :, jj) = imfilter(PXM1(:, :, jj), fspecial('gaussian', 30, 2), 'replicate');
+end
+
+
+for jj = 1:size(PXM2,3),
+    PXM2(251:470, 401:500, jj) = ones(220,100)*0.0;
+    PXM1(251:470, 401:500, jj) = ones(220,100)*0.0; 
+end
+
 PXM3 = PXM1.*lambda + PXM2.*(1-lambda);
+
+
 
 %figure; 
 % subplot(2,2,1); imshow(PXM1(:,:,1))
@@ -43,7 +56,7 @@ for ind = 1:size(PXM3,3)
     
     currFrame = getframe(gcf);
     imwrite(currFrame.cdata, fullfile(savepath,[num2str(ind),'.png']),'PNG');
-    pause(0.015)
+    %pause(0.015)
     writeVideo(V,currFrame);
     mmo(ind) = currFrame;
 end

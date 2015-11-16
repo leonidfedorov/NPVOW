@@ -60,7 +60,8 @@ classdef WalkerPath
         Morph_Nick_c_45_315_l025_bw = 'NPVOW\walker\test\pxlmorph\nick_45_315_la0.25_bw';
         Morph_Nick_c_45_315_l075_bw = 'NPVOW\walker\test\pxlmorph\nick_45_315_la0.75_bw';        
         Morph_Nick_c_45_315_l09_bw = 'NPVOW\walker\test\pxlmorph\nick_45_315_la0.9_bw';        
-        Morph_Nick_c_45_315_l01_bw = 'NPVOW\walker\test\pxlmorph\nick_45_315_la0.1_bw';        
+        Morph_Nick_c_45_315_l01_bw = 'NPVOW\walker\test\pxlmorph\nick_45_315_la0.1_bw';
+        Morph_Nick_c_45_315_l05_g_6_b = 'NPVOW\walker\test\pxlmorph\nick_45_315_la0.5_g_6_b';
         
         %simulation keys
         Sim_c_45_315_n = 'NPVOW\walker\simres\c_45-315_n\';
@@ -188,7 +189,9 @@ classdef WalkerPath
                 case 'morph-nick-c-45-315-n-la0.9-bw'
                     dirpath = WalkerPath.Morph_Nick_c_45_315_l09_bw;     
                 case 'morph-nick-c-45-315-n-la0.1-bw'
-                    dirpath = WalkerPath.Morph_Nick_c_45_315_l01_bw;     
+                    dirpath = WalkerPath.Morph_Nick_c_45_315_l01_bw; 
+                case 'morph-nick-c-45-315-n-la0.5-g-6-b'    
+                    dirpath = WalkerPath.Morph_Nick_c_45_315_l05_g_6_b;
                     
                 %simulation results for RBF networks pathkeys
                 case 'sim-c-45-315-n'
