@@ -5,6 +5,9 @@ classdef WalkerPath
         % 1) record it here as a new class property
         % 2) add a condition to the parseKey function
         
+        %CoRepresentation Experiment 1 Stimuli
+        CR1_C_female_0_la0 = 'NPVOW\CoRepActions\catching\';
+        
         %diamond parts each separately on gray background, lit below and above              
         StNW1_d_h90 = 'NPVOW\walker\test\diamondparts\h90\';                    
         StNW1_d_h270 = 'NPVOW\walker\test\diamondparts\h270\';
@@ -92,6 +95,10 @@ classdef WalkerPath
             %only need to rewrite this method to parse it and nothing else 
             %(which is also another useful point of having this class).
             switch pathkey
+                %%CoRepresentation Experiment 1 Stimuli
+                case 'cr-c-0-la0.0'
+                    dirpath = WalkerPath.CR1_C_female_0_la0;
+                
                 %diamond parts each separately on gray background, lit below and above
                 case 'st-d-h90'
                     dirpath = WalkerPath.StNW1_d_h90;                    
