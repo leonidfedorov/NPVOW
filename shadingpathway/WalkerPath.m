@@ -5,6 +5,10 @@ classdef WalkerPath
         % 1) record it here as a new class property
         % 2) add a condition to the parseKey function
         
+        
+        %mocap data files
+        AC_arm_left = 'NPVOW\mocap\arm\larm.csv';
+        
         %CoRepresentation Experiment 1 Stimuli
         CR1_C_female_0_la0 = 'NPVOW\CoRepActions\catching\';
         
@@ -95,6 +99,10 @@ classdef WalkerPath
             %only need to rewrite this method to parse it and nothing else 
             %(which is also another useful point of having this class).
             switch pathkey
+                %Left Arm mocap data
+                case 'leftarm-data'
+                    dirpath = WalkerPath.AC_arm_left;
+                    
                 %%CoRepresentation Experiment 1 Stimuli
                 case 'cr-c-0-la0.0'
                     dirpath = WalkerPath.CR1_C_female_0_la0;
