@@ -19,7 +19,7 @@ parseGermanCSV = @(arr, coords) arrayfun(extractDouble, arr(coords(1):end, coord
 
 %take a pathkey to the file and return an array of doubles as designed
 armArray = parseGermanCSV(csvimport(WalkerPath.getPath(pathkey), 'delimiter', ';'), [12, 2]);
-cd
+
 return
 
 

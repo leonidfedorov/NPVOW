@@ -8,6 +8,7 @@ classdef WalkerPath
         
         %mocap data files
         AC_arm_left = 'NPVOW\mocap\arm\larm.csv';
+        AC_arm_left_movie = 'NPVOW\walker\plarm\';
         
         %CoRepresentation Experiment 1 Stimuli
         CR1_C_female_0_la0 = 'NPVOW\CoRepActions\catching\';
@@ -102,6 +103,8 @@ classdef WalkerPath
                 %Left Arm mocap data
                 case 'leftarm-data'
                     dirpath = WalkerPath.AC_arm_left;
+                case 'leftarm-movie'
+                    dirpath = WalkerPath.AC_arm_left_movie;
                     
                 %%CoRepresentation Experiment 1 Stimuli
                 case 'cr-c-0-la0.0'
