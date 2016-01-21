@@ -10,6 +10,16 @@ function [armArray] = readArmData(pathkey)
 %
 %                Tested with MATLAB 8.4 on a Xeon E5-1620 3.6Ghz under W7
 
-te = csvimport(WalkerPath.getPath(pathkey), 'delimiter', ';');
-te = te(1 : 11, :)  = []
+%take a singleton cell with a German string representing a double and return an actual double
+extractDouble = @(x) str2double(strrep(x{1}, ',', '.'));
+
+%take a cell array and x,y coordinates of the upper-left corner of the
+%sub-array which contains the data, and apply extractDouble to it
+parseGermanCSV = @(arr, coords) arrayfun(extractDouble, arr(coords(1):end, coords(2):end));
+
+%take a pathkey to the file and return an array of doubles as designed
+armArray = parseGermanCSV(csvimport(WalkerPath.getPath(pathkey), 'delimiter', ';'), [12, 2]);
+cd
+return
+
 
