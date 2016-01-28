@@ -30,9 +30,9 @@ end;
 
 
 %         rectify, normalize and threshold
-thrFV1f = 20;        % threshold
+thrFV1f = 10;        % threshold
 nmfFV1f = 70;        % fixed normalization factor
-thrFV1c = 20;        % threshold   
+thrFV1c = 10;        % threshold   
 nmfFV1c = 70;        % fixed normalization factor
 %FV1f  = (FV1f - thrFV1f) .* (FV1f > thrFV1f) / nmfFV1f;
 %FV1c  = (FV1c - thrFV1c) .* (FV1c > thrFV1c) / nmfFV1c;
