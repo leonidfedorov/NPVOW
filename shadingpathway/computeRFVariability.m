@@ -50,8 +50,10 @@ vardata.selection = reshape(vardata.magnitude, [xind yind]) > threshold;
 vardata.sum = sum(rfvariability(:));
 vardata.dimensions = [tind, xind, yind, dirind];
 vardata.variability = rfvariability;
+vardata.unselected = te;
 te (:, ~vardata.selection, :) = [];
 vardata.result = te;
+
 
 save(fullfile( WalkerPath.getPath(pathkey), strcat('rfvar_', type,'.mat')),'vardata');
 

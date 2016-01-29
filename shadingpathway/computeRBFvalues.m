@@ -1,4 +1,4 @@
-function [networkResp] = computeRBFvalues(type, varargin)
+function [networkResp] = computeRBFvalues(selectivity, type, varargin)
 % computeRBFonForm(varargin);
 %          takes a list of pathkeys containing any pathway output. Returns
 %          a cell array where cell at (i, j) contains the RBF network 
@@ -39,12 +39,23 @@ simpathkey = varargin{end}%contents of the last cell is a char key
 %Load a structure array of responses, where each response structure is derived from varargin
 resplist = cellfun(@(x) loadPathwayResp(x, type), stimulikeys, 'UniformOutput', false); 
 
+if ~strcmp(selectivity, '0'),
+    selind = str2num(selectivity);
+    for respind = 1 : numel(resplist),
+        if respind ~=selind
+            resplist{respind}.result = resplist{respind}.unselected(:, resplist{selind}.selection, :);
+        end
+    end
+end
+
 if strcmp(type, 'form')
+    rbf_scale = 0.05;
     %From each structure element get V4 responses as a cell array
     v4list = cellfun(@(x) x.('v4'), resplist, 'UniformOutput', false);
     % Reshape V4 responses, so 3d response array to each image is a 1d array
     vecresp = cellfun(@(x) reshape(x, [size(x, 1) * size(x, 2) * size(x, 3), size(x, 4)]), v4list, 'UniformOutput', false);
 elseif strcmp(type, 'shading-sel')
+    rbf_scale = 100;
     %get selected RF responses of the shading pathway
     shadinglist = cellfun(@(x) x.('result'), resplist, 'UniformOutput', false);
     %Also reshape shading pathway responses(dims are different from form)
@@ -53,7 +64,7 @@ end
 
 % Estimate to beta parameter of the RBF function
 D = cell2mat(vecresp)' * cell2mat(vecresp);
-beta = 0.1 / sqrt(sum(D( : ) / size(D, 1) ^ 2));%1.0%40
+beta = rbf_scale * 1.0 / sqrt(sum(D( : ) / size(D, 1) ^ 2));%1.0%40
 %beta = 0.2 for shaded walkers on gray background
 %beta = 0.1 for shaded walkers on BW background
 

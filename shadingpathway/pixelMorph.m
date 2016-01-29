@@ -20,10 +20,10 @@ for jj = 1:size(PXM2,3)
 end
 
 
-for jj = 1:size(PXM2,3),
-    PXM2(251:470, 401:500, jj) = ones(220,100)*0.0;
-    PXM1(251:470, 401:500, jj) = ones(220,100)*0.0; 
-end
+% for jj = 1:size(PXM2,3),
+%     PXM2(251:470, 401:500, jj) = ones(220,100)*0.0;
+%     PXM1(251:470, 401:500, jj) = ones(220,100)*0.0; 
+% end
 
 PXM3 = PXM1.*lambda + PXM2.*(1-lambda);
 
