@@ -1,0 +1,50 @@
+%TODO: very old, one of the first routine in creation pof the stimuli - need to refactor that immediately
+
+function computeAverageBrightness(allfolder)
+
+allf = allfolder;
+alllisting = dir(allf);
+isub = [alllisting(:).isdir];
+alllisting = alllisting(isub);
+alllisting = alllisting(3:(numel(alllisting)));
+%TODO: use this to remove root directory addresses instead
+%ismember({alllisting.name},{'.','..'})'
+
+all_br_values = inf(34,numel(alllisting));
+for allind = 1:numel(alllisting),
+
+    f = alllisting(allind).name;
+
+    listing = dir(strcat(allf,f,'\*.avi'));
+
+    br_values = inf(numel(listing),63);
+
+    for ind=1:numel(listing),
+
+        coavi = strcat(allf,f,'\',listing(ind).name);
+        covid = VideoReader(coavi)
+        numofr = get(covid,'NumberOfFrames');
+        cofr = read(covid);
+
+        br_values(ind,1) = lightAngleFromFilename(listing(ind).name);
+        br_values(ind,2) = directionFromFilename(listing(ind).name);
+
+
+        for frindex = 1:numofr,
+            coframe = cofr(:,:,:,frindex);
+            coframe(:,:,2:3) = [];
+
+            br_values(ind,3+frindex) = sum(coframe(:))/nnz(coframe(:))/256;
+        end
+        br_values(ind,3) = mean(br_values(ind,4:end));
+    end
+
+     all_br_values(:, allind) = br_values(:, 3);
+     save(strcat(allf,f,'\br_values','.mat'), 'br_values');
+end
+% NOTE: the original order of columns is the order of foldernames in %alltef%, so 
+% I change it from [LFA LL LT LU RFA RL RT RU TB] to [LFA RFA LT RT LL RL LU RU TB].
+
+all_br_values = all_br_values(:, [1,5,3,7,2,6,4,8,9]);
+all_br_values = [br_values(:,1:2) all_br_values];
+save(strcat(allf,'all_br_values','.mat'), 'all_br_values');
