@@ -33,7 +33,7 @@ for i = 1:numel(videoNameList)
     display(fullVideoName)
 
     % we only want half of all frames because they contain full gait cycle
-    for frindex = 1:(video.framerate*video.duration/2), 
+    for frindex = 1:(video.framerate*video.duration), 
         videoFrame = readFrame(video);
         videoFrame(:,:,2:3) = [];
         %\videoFrame = videoFrame(50:550,250:550);

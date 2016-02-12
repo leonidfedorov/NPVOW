@@ -8,7 +8,9 @@ classdef WalkerPath
         
         %mocap data files
         AC_arm_left = 'NPVOW\mocap\arm\larm.csv';
-        AC_arm_left_movie = 'NPVOW\walker\plarm\';
+        AC_arm_left_movie = 'NPVOW\arm\';
+        AC_arm_left_noiseless_orig = 'NPVOW\arm\_n-0_s-0-0_r-0-0-0_v-0-0';
+        AC_arm_left_noiseless_skewed = 'NPVOW\arm\_n-0_s-0-0_r-0-0-0_v--45-0';
         
         %CoRepresentation Experiment 1 Stimuli
         CR1_C_female_0_la0 = 'NPVOW\CoRepActions\catching\';
@@ -83,6 +85,7 @@ classdef WalkerPath
         Sim_c_45_315_n_nick = 'NPVOW\walker\simres\c_45-315_n_nick\';
         Sim_c_45_315_n_nick_bw = 'NPVOW\walker\simres\c_45-315_n_nick_bw';
         Sim_c_45_315_0_n_nick_bw = 'NPVOW\walker\simres\c_45-315-0_n_nick_bw';
+        Sim_arm_orsk = 'NPVOW\arm\simres\arm_original_skewed';
     end
     
     methods(Static, Access = public)
@@ -112,6 +115,10 @@ classdef WalkerPath
                     dirpath = WalkerPath.AC_arm_left;
                 case 'leftarm-movie'
                     dirpath = WalkerPath.AC_arm_left_movie;
+                case 'leftarm-noiseless-orig'    
+                    dirpath = WalkerPath.AC_arm_left_noiseless_orig;
+                case 'leftarm-noiseless-skewed'
+                    dirpath = WalkerPath.AC_arm_left_noiseless_skewed;                    
                     
                 %%CoRepresentation Experiment 1 Stimuli
                 case 'cr-c-0-la0.0'
@@ -242,6 +249,8 @@ classdef WalkerPath
                     dirpath = WalkerPath.Sim_c_45_315_n_nick_bw;
                 case 'sim-c-45-315-0-n-nick-bw'
                     dirpath = WalkerPath.Sim_c_45_315_0_n_nick_bw;
+                case 'sim-arm-orsk'
+                    dirpath = WalkerPath.Sim_arm_orsk;
                     
                 %just display the error message, so {getPath} will just return the {userpath}    
                 otherwise
