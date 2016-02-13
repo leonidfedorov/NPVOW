@@ -8,7 +8,7 @@ gradient = @(A, b, c) A' * (A * b - c) / length(c);
 
 
 for iter = 1:num_iters
-    theta = theta - alpha * gradient;  %simultaneuously update all values in the weight vector
+    theta = theta - alpha * gradient(X, y, theta);  %simultaneuously update all values in the weight vector
 
     costhist(iter) = costFun(X, y, theta);
 
