@@ -90,10 +90,10 @@ networkResp.meta = {stimulikeys{1:end}, type}; % we save pathkeys to know what p
 
 simpath = WalkerPath.getPath(simpathkey);
 if ~exist(simpath, 'dir'), mkdir(simpath); end
-save(fullfile(simpath, strcat('networkResp', '.mat')),'networkResp')
+save(fullfile(simpath, strcat(type,'_networkResp', '.mat')),'networkResp')
 savepath = strrep(datestr(datetime('now')), ':', '-');
 mkdir(simpath, savepath);
-save(fullfile(simpath, savepath, strcat('networkResp', '.mat')), 'networkResp');
+save(fullfile(simpath, savepath, strcat(type,'_networkResp', '.mat')), 'networkResp');
 
 %TODO: think about rearranging the frames??
 

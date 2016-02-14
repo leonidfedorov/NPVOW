@@ -10,6 +10,8 @@ function [networkResp] = compute2dNFinput(pathkey)
 
 close all;
 
+%%TODOTODO: GO HERE, LOAD PATHWAY OUTPUT AND REGRESS ONTO 50x50 FIELD INPUT
+
 path_nf = 'C:\Users\leonidf\Documents\MATLAB\NPVOW\newNeurFs\';
 
 % you have just 10 time moments of your D-dimensional examples:

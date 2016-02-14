@@ -1,4 +1,4 @@
-function plotSnapshotProfiles(pathkey, timestamp)
+function plotSnapshotProfiles(type, pathkey, timestamp)
 % plotSnapshotProfiles(pathkey, timestamp);
 %          plots responses of the snapshot neuron level of the Giese-Poggio
 %          2003 model to a given pathway input.
@@ -8,15 +8,15 @@ function plotSnapshotProfiles(pathkey, timestamp)
 %                Tested with MATLAB 8.4 on a Xeon E5-1620 3.6Ghz under W7
 %
 
-narginchk(1, 2)
+narginchk(2, 3)
 
-if nargin == 1
+if nargin == 2
     stimulipath = WalkerPath.getPath(pathkey);
-elseif nargin == 2
+elseif nargin == 3
     stimulipath = fullfile(WalkerPath.getPath(pathkey), timestamp);
 end
 
-respdata = load(fullfile(stimulipath, 'networkResp.mat'));
+respdata = load(fullfile(stimulipath, strcat(type,'_networkResp.mat')));
 nresp = respdata.networkResp.resp;
 keys = respdata.networkResp.meta;
 
