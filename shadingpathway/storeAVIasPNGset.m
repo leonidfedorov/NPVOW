@@ -15,28 +15,28 @@ narginchk(1,1)
 
 %NOTE: dir() actually takes care of potential double slashes in this wildcard
 %call, but not of the case of no slashes; hence appending filesep()
-aviListing = dir(strcat(folder,filesep,'*.avi'));
+aviListing = dir(strcat(folder, filesep, '*.avi'));
 videoNameList = {};
-for i = 1:numel(aviListing),
+for i = 1 : numel(aviListing),
     [filePath, fileName, fileExt] = fileparts(aviListing(i).name); 
-    videoName = fullfile(folder,fileName);
-    videoNameList = [videoNameList;{videoName}]; 
+    videoName = fullfile(folder, fileName);
+    videoNameList = [videoNameList; {videoName}]; 
     if ~isdir(videoName)
         mkdir(videoName);
     end
 end
 
 
-for i = 1:numel(videoNameList)
+for i = 1 : numel(videoNameList)
     fullVideoName = fullfile(folder, aviListing(i).name);
     video = VideoReader(fullVideoName);
     display(fullVideoName)
 
     % we only want half of all frames because they contain full gait cycle
-    for frindex = 1:(video.framerate*video.duration), 
+    for frindex = 28:177,%1 : (video.framerate*video.duration), 
         videoFrame = readFrame(video);
-        videoFrame(:,:,2:3) = [];
-        %\videoFrame = videoFrame(50:550,250:550);
+        videoFrame(:, :, 2 : 3) = [];
+%         videoFrame = videoFrame(50:850,300:600);
 %NOTE: below its very important to convert the second argument with char(),
 %otherwise the imwrite() function won't be able to parse its arguments.
         imwrite(videoFrame, char(fullfile(videoNameList(i), strcat(num2str(frindex),'.png'))),'PNG');
