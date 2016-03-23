@@ -13,6 +13,7 @@ classdef WalkerPath
         AC_arm_left_noiseless_skewed = 'NPVOW\arm\_n-0_s-0-0_r-0-0-0_v--45-0';
         arm_sk0_1 = 'NPVOW\arm\sk\0_rotSh_better';
         arm_sk45_1 = 'NPVOW\arm\sk\45_rotSh_better';
+        arm_sk90_1 = 'NPVOW\arm\sk\45_rotSh_better';
         
         
         %CoRepresentation Experiment 1 Stimuli
@@ -125,6 +126,8 @@ classdef WalkerPath
                     dirpath = WalkerPath.AC_arm_left_noiseless_skewed;    
                     
                 %Arm videos
+                case 'arm-sk90-1'
+                    dirpath = WalkerPath.arm_sk90_1;              
                 case 'arm-sk45-1'
                     dirpath = WalkerPath.arm_sk45_1;
                 case 'arm-sk0-1'
