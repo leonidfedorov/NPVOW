@@ -33,9 +33,12 @@ for i = 1 : numel(videoNameList)
     display(fullVideoName)
 
     % we only want half of all frames because they contain full gait cycle
-    for frindex = 28:177,%1 : (video.framerate*video.duration), 
-        videoFrame = readFrame(video);
-        videoFrame(:, :, 2 : 3) = [];
+    tic;
+    frames = read(video, [1 Inf]);
+    display(['Read ', num2str(size(frames,4)),' frames from ', video.name,' in ', num2str(toc),' seconds.']);
+    for frindex = 1 : size(frames, 4)
+        videoFrame = squeeze(frames(:,:,:,frindex));
+%         videoFrame(:, :, 2 : 3) = [];
 %         videoFrame = videoFrame(50:850,300:600);
 %NOTE: below its very important to convert the second argument with char(),
 %otherwise the imwrite() function won't be able to parse its arguments.
