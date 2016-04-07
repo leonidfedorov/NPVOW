@@ -13,7 +13,7 @@ classdef WalkerPath
         AC_arm_left_noiseless_skewed = 'NPVOW\arm\_n-0_s-0-0_r-0-0-0_v--45-0';
         arm_sk0_1 = 'NPVOW\arm\sk\0_rotSh_better';
         arm_sk45_1 = 'NPVOW\arm\sk\45_rotSh_better';
-        arm_sk90_1 = 'NPVOW\arm\sk\45_rotSh_better';
+        arm_sk90_1 = 'NPVOW\arm\sk\90_rotSh_better';
         
         
         %CoRepresentation Experiment 1 Stimuli
@@ -90,7 +90,7 @@ classdef WalkerPath
         Sim_c_45_315_n_nick_bw = 'NPVOW\walker\simres\c_45-315_n_nick_bw';
         Sim_c_45_315_0_n_nick_bw = 'NPVOW\walker\simres\c_45-315-0_n_nick_bw';
         Sim_arm_orsk = 'NPVOW\arm\simres\arm_original_skewed';
-        Sim_arm_3d_1 = 'NPVOW\arm\simres\arm_0-45_1';
+        Sim_arm_3d_1 = 'NPVOW\arm\simres\arm_0-45-90_1';
     end
     
     methods(Static, Access = public)
