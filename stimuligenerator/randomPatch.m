@@ -1,4 +1,4 @@
-function [outpath] = randomPatch(in1, in2, out, radius, phnum, blend)
+function [outpath] = randomPatch(in1, in2, out, radius, phnum1, phnum2, blend)
 
 close all;
 in1vid = VideoReader(in1)
@@ -37,20 +37,43 @@ for frindex = 1:numofr1,
     frame1 = frames1(:, :, frindex);
     frame2 = frames2(:, :, frindex);
    
-    mask = zeros(size(frame1));
-    for circleInd = 1 : phnum, 
-        mask = double(mask + circleMask(randi(500, phnum, 2) + 200, randi(700, phnum, 2) + 100, size(frame1, 1), size(frame1, 2), radius) > 0);
-    end
-
-    frame2 = imfilter(frame2, fspecial('gaussian', 30, 0.5), 'replicate');
+    mask1 = zeros(size(frame1));
+    mask2 = zeros(size(frame2));
     
-    newframe = blend * mask .* im2double(frame1) + (1 - blend) * mask.* im2double(frame2);
+    for circleInd = 1 : phnum1, 
+        mask1 = double(mask1 + circleMask(randi(500, phnum1, 2) + 200, randi(700, phnum1, 2) + 100, size(frame1, 1), size(frame1, 2), radius) > 0);
+%         mask2 = double(mask2 + circleMask(randi(500, phnum2, 2) + 200, randi(700, phnum2, 2) + 100, size(frame2, 1), size(frame2, 2), radius) > 0);
+    end
+    
+    for circleInd = 1 : phnum2, 
+%         mask1 = double(mask1 + circleMask(randi(500, phnum1, 2) + 200, randi(700, phnum1, 2) + 100, size(frame1, 1), size(frame1, 2), radius) > 0);
+        mask2 = double(mask2 + circleMask(randi(500, phnum2, 2) + 200, randi(700, phnum2, 2) + 100, size(frame2, 1), size(frame2, 2), radius) > 0);
+    end
+    
+    frame1 = uint8(mask1).* frame1;
+    frame2 = uint8(mask2).* frame2;
+    
+    newframe = frame2;
+    for xInd = 1:size(frame1, 1),
+        for yInd = 1:size(frame1, 1),
+            if and(frame2(xInd, yInd) == 0, frame1(xInd, yInd) > 0)
+                newframe(xInd, yInd) = frame1(xInd, yInd);
+            end
+        end
+    end
+    
+    newframe = im2double(newframe);
+%     newframe = im2double(frame1 + frame2);
+    
+%     frame2 = imfilter(frame2, fspecial('gasussian', 30, 0.5), 'replicate');
+    
+%     newframe = blend * mask .* im2double(frame1) + (1 - blend) * mask.* im2double(frame2);
     
 
     
     subplot(2, 2, 1); imshow(frame1);
     subplot(2, 2, 2); imshow(frame2);
-    subplot(2, 2, 3); imshow(mask);
+%     subplot(2, 2, 3); imshow(mask);
     subplot(2, 2, 4); imshow(newframe);
     writeVideo(outvid, newframe);
 
