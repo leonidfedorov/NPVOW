@@ -13,7 +13,7 @@ clear te;
 
 
 for ind = 2:50:36000
-    section((ind - mod(ind,50))/50 + 1, :) = [activity(2, 1:25, ind), activity(27, 26:50, ind)];
+    section((ind - mod(ind,50))/50 + 1, :) = [activity(1, 1:25, ind), activity(26, 26:50, ind)];
 end
 
 figure;
