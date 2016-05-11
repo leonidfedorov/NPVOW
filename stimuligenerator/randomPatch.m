@@ -48,7 +48,7 @@ for frindex = 1:numofr1,
     for circleInd = 1 : phnum2, 
 %         mask1 = double(mask1 + circleMask(randi(500, phnum1, 2) + 200, randi(700, phnum1, 2) + 100, size(frame1, 1), size(frame1, 2), radius) > 0);
         mask2 = double(mask2 + circleMask(randi(500, phnum2, 2) + 200, randi(700, phnum2, 2) + 100, size(frame2, 1), size(frame2, 2), radius) > 0);
-    end
+    end 
     
     frame1 = uint8(mask1).* frame1;
     frame2 = uint8(mask2).* frame2;
