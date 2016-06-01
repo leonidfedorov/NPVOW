@@ -9,16 +9,15 @@ clear te;
 % subplot(1, 4, 1); %surf(activity(1:50, 1:50, 20063)); 
 
 
-
-
-
-for ind = 2:50:36000
+for ind = 2:50:36000,
     section((ind - mod(ind, 50)) / 50 + 1, :) = [activity(1, 1:25, ind), activity(26, 26:50, ind)];
 end
 
 figure;
 subplot(2, 3, 1);
-map(:, :, :) = activity(:, :, 2:50:3600);
+
+map(:, :, :) = activity(:, :, 2:50:36000);
+
 surf(mean(map, 3)); title('Mean of Poincare Section');
 
 
