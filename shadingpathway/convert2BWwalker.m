@@ -14,6 +14,7 @@ open(bwvid);
 for frindex = 1:numofr,
     coframe = cofr(:,:,:,frindex);
     bwframe = double(im2bw(coframe,0.1));%writeVideo, unlike imshow, only accepts double
+    bwframe = bwframe(81:800,251:650);
     h1 = imshow(imresize(bwframe,0.5)) %for debugging
     %Protecting against bg or fg being equal to 0 or 1 on input,
     %which could make bg and fg pixels euqal without user's intention.
