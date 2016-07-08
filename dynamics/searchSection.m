@@ -1,5 +1,12 @@
-function success = searchSection(folder)
+function [statsarr] = searchSection(folder, m1min, m1max, m2min, m2max, shapeX, shapeY)
 
+
+shape = [shapeX shapeY];
+
+%this will convert number of periods into seconds.
+%for example, 1 discretization unit is 0.04 seconds
+% and there are 50 discretization units in one period
+UNITCONV = 0.04*50; 
 
 
 simlist = dir(fullfile(folder,'*_fieldsec2.mat'));
@@ -23,7 +30,7 @@ for simind = 1:numel(simlist),
     clear last, nouds, noslash;
     
     te = load(fname);
-    times = [te.fieldsec.leftCount,te.fieldsec.rightCount]*0.04*50;
+    times = [te.fieldsec.leftCount,te.fieldsec.rightCount] * UNITCONV;
     means(simind) = mean(times);
     stds(simind) = std(times);
     clear te
@@ -32,18 +39,18 @@ for simind = 1:numel(simlist),
 end
 
 
-msel = reshape(means,[13 10]);
-ssel = reshape(stds, [13 10]);
+msel = reshape(means, shape);
+ssel = reshape(stds, shape);
 
-msel = (msel>16.8).*(msel<20.8);
-ssel = (ssel>8.3).*(ssel<16.3);
+msel = (msel > m1min).*(msel < m1max);
+ssel = (ssel > m1min).*(ssel < m2max);
 
 selection = msel.*ssel;
 
-noise(find(reshape(noise,[13 10]) .* selection))
-adaptation(find(reshape(adaptation,[13 10]) .* selection))
+nret = noise(find(reshape(noise, shape) .* selection));
+aret = adaptation(find(reshape(adaptation, shape) .* selection));
 
+statsarr = [nret', aret']
 
-success = 1;
 
 return
