@@ -5,26 +5,26 @@ te = load(fieldfile);
 activity = te.('fieldsim').('UST');
 clear te;
 
-for ind = 2:50:36000,
+for ind = 2:50:360000,
     section((ind - mod(ind, 50)) / 50 + 1, :) = [activity(1, 1:25, ind), activity(26, 26:50, ind)];
 end
 
 
-map(:, :, :) = activity(:, :, 2:50:36000);
+map(:, :, :) = activity(:, :, 2:50:360000);
 
 ptCount = Inf(size(section, 1), 2);
 leftCount = [0];
 rightCount = [0];
 
 for i = 2:size(section,1),
-    if and(max(section(i, 1:25) >= 0.1), max(section(i, 26:50) < 0.1)),
+    if and(max(section(i, 1:25) >= 0.8), max(section(i, 26:50) < 0.1)),
         ptCount(i, 1) = 1;
         if ptCount(i - 1, 1) == Inf,
             leftCount = [leftCount 1];
         else
             leftCount(end) = leftCount(end) + 1;
         end
-    elseif and(max(section(i, 1:25) < 0.1), max(section(i, 26:50) >= 0.1)),
+    elseif and(max(section(i, 1:25) < 0.1), max(section(i, 26:50) >= 0.8)),
         ptCount(i, 2) = 1;
         if ptCount(i - 1, 2) == Inf,
             rightCount = [rightCount 1];
@@ -32,7 +32,7 @@ for i = 2:size(section,1),
             rightCount(end) = rightCount(end) + 1;        
         end
     else
-        ptCount(i, :) = [1 1];
+        ptCount(i, :) = [0 0];
     end
 end
 
