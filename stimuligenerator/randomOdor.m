@@ -69,7 +69,8 @@ step = 0.001; %this is the "time resolution" of how precise will the intervals
 for i = 1:size(duration, 1),
     %for every level, we simply add a bunch of numbers of that exact value
     %at the end of the vector. And the number of these numbers that we add
-    %depends on the corresponding duration
+    %depends on the corresponding duration divided by the step. Overall the 
+    %duration is always the same so we just increase the resolution.
     stimulus = [stimulus levels(i) * ones(1, floor(duration(i)/step))];%[stimulus stimulus(end) : 0.01 : stimulus(end) + duration(i)]
 
 end
