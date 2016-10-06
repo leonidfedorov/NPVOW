@@ -48,7 +48,7 @@ for x = linspace(xmin, xmax, ngrid)
 end
  
 
-% covering area is the total area times the ratio of the point
+% covering area is the total area times the ratio of inside/all points
 covering_area = box_area * inside / ngrid^2;
 
 % hypothetical maximal area if disks didn't overlap
