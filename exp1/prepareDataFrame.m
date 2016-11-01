@@ -7,7 +7,7 @@ dataframe = [];
 for i = 1:numel(reslist),
     te = load(fullfile(folder,reslist(i).name));
     resp = te.('resp');
-    if size(resp, 1) == 576,
+    if size(resp, 1) == 756,
         resp(1:36, :) = [];
     end
 %     shad = resp( ~isinf(resp(:, 1)), :);
