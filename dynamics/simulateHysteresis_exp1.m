@@ -1,9 +1,6 @@
 function [success] = simulateHysteresis_exp1(folder)%, suffix)
 
-close all; clear all;
-addpath('C:\Users\leonidf\Documents\MATLAB\NPVOW\external\intersections');
-
-
+%close all; clear all;
 numbetas = 29;
 numsamples = 100;
 
