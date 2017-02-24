@@ -35,6 +35,44 @@ function [respath] = generateWalkerParts()
 
     for i = 1 : size(conditionnames, 2),
         conditionnames{i}
+        %+- 22 deg from exact above/below
+        generateWalker('StNW1', 18 * pi / 16, [3 * pi/2 0], [0.0 0.0 0.0], [900 900], ...
+            conditionnames{i}, inf(1, 9), conditions(i, :), [0 0], [1 1 1 1 1])
+        
+        generateWalker('StNW1', -2 * pi / 16, [3 * pi/2 0], [0.0 0.0 0.0], [900 900], ...
+            conditionnames{i}, inf(1, 9), conditions(i, :), [0 0], [1 1 1 1 1])
+        
+        generateWalker('StNW1', 14 * pi / 16, [pi/2 0], [0.0 0.0 0.0], [900 900], ...
+            conditionnames{i}, inf(1, 9), conditions(i, :), [0 0], [1 1 1 1 1])
+        
         generateWalker('StNW1', 2 * pi / 16, [pi/2 0], [0.0 0.0 0.0], [900 900], ...
             conditionnames{i}, inf(1, 9), conditions(i, :), [0 0], [1 1 1 1 1])
+        
+        %+- 33 deg from exact above/below        
+        generateWalker('StNW1', 19 * pi / 16, [3 * pi/2 0], [0.0 0.0 0.0], [900 900], ...
+            conditionnames{i}, inf(1, 9), conditions(i, :), [0 0], [1 1 1 1 1])
+        
+        generateWalker('StNW1', -3 * pi / 16, [3 * pi/2 0], [0.0 0.0 0.0], [900 900], ...
+            conditionnames{i}, inf(1, 9), conditions(i, :), [0 0], [1 1 1 1 1])
+        
+        generateWalker('StNW1', 13 * pi / 16, [pi/2 0], [0.0 0.0 0.0], [900 900], ...
+            conditionnames{i}, inf(1, 9), conditions(i, :), [0 0], [1 1 1 1 1])
+        
+        generateWalker('StNW1', 3 * pi / 16, [pi/2 0], [0.0 0.0 0.0], [900 900], ...
+            conditionnames{i}, inf(1, 9), conditions(i, :), [0 0], [1 1 1 1 1])
+        
+        %+- 45 deg from exact above/below        
+        generateWalker('StNW1', 20 * pi / 16, [3 * pi/2 0], [0.0 0.0 0.0], [900 900], ...
+            conditionnames{i}, inf(1, 9), conditions(i, :), [0 0], [1 1 1 1 1])
+        
+        generateWalker('StNW1', -4 * pi / 16, [3 * pi/2 0], [0.0 0.0 0.0], [900 900], ...
+            conditionnames{i}, inf(1, 9), conditions(i, :), [0 0], [1 1 1 1 1])
+        
+        generateWalker('StNW1', 12 * pi / 16, [pi/2 0], [0.0 0.0 0.0], [900 900], ...
+            conditionnames{i}, inf(1, 9), conditions(i, :), [0 0], [1 1 1 1 1])
+        
+        generateWalker('StNW1', 4 * pi / 16, [pi/2 0], [0.0 0.0 0.0], [900 900], ...
+            conditionnames{i}, inf(1, 9), conditions(i, :), [0 0], [1 1 1 1 1])        
+        
+        
     end
